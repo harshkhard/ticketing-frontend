@@ -6,3 +6,13 @@ export type LoginResponse = {
 export type LoginActionPayload = {
   userName: string;
 };
+
+export type SignupResponse = {
+  athlete_name: string;
+  athlete_id: string;
+};
+
+export type SignupAcionPayload = {
+  userName: string;
+  name: string;
+};

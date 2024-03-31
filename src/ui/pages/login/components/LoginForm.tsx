@@ -9,6 +9,7 @@ import React from "react";
 import { LoginBox, LoginTitleDivider } from "../styles";
 import { FORM_SPACING } from "../constants";
 import { useLoginHook } from "../hooks/login";
+import { BUTTON_LOADER_SIZE } from "../../../../utils/constants";
 
 type LoginFormProps = {
   onFormStateChnage: () => void;
@@ -37,7 +38,11 @@ export const LoginForm = (props: LoginFormProps) => {
       <Grid item container justifyContent={"space-between"}>
         <Grid item>
           <Button variant="outlined" onClick={handleLogin}>
-            {loginLoading ? <CircularProgress /> : "Login"}
+            {loginLoading ? (
+              <CircularProgress size={BUTTON_LOADER_SIZE} />
+            ) : (
+              "Login"
+            )}
           </Button>
         </Grid>
         <Grid item>

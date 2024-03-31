@@ -12,4 +12,12 @@ export const AuthApi = {
       method: "POST",
     });
   },
+
+  signup: async (userName: string, name: string) => {
+    return BaseApi({
+      url: `${authApiPath}/`,
+      data: { athlete_id: userName, athlete_name: name },
+      method: "POST",
+    });
+  },
 };

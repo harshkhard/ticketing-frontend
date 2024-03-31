@@ -1,15 +1,28 @@
-import { Grid, Typography, TextField, Button } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  TextField,
+  Button,
+  CircularProgress,
+} from "@mui/material";
 import { FORM_SPACING } from "../constants";
 import { LoginBox, LoginTitleDivider } from "../styles";
 import { useSignupHook } from "../hooks/signup";
+import { BUTTON_LOADER_SIZE } from "../../../../utils/constants";
 
 type SignupFormProps = {
   onFormStateChnage: () => void;
 };
 
 export const SignupForm = (props: SignupFormProps) => {
-  const { userName, name, handleNameChange, handleUserNameChange } =
-    useSignupHook();
+  const {
+    userName,
+    name,
+    handleNameChange,
+    handleUserNameChange,
+    handleSignup,
+    signupLoading,
+  } = useSignupHook();
 
   return (
     <Grid container direction={"column"} spacing={FORM_SPACING}>
@@ -41,7 +54,13 @@ export const SignupForm = (props: SignupFormProps) => {
       </Grid>
       <Grid item container justifyContent={"space-between"}>
         <Grid item>
-          <Button variant="outlined">Sign up</Button>
+          <Button variant="outlined" onClick={handleSignup}>
+            {signupLoading ? (
+              <CircularProgress size={BUTTON_LOADER_SIZE} />
+            ) : (
+              "Sign up"
+            )}
+          </Button>
         </Grid>
         <Grid item>
           <Button

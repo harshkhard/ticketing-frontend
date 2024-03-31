@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AuthApi } from "../../services/auth";
-import { LoginActionPayload, LoginResponse } from "../../models/auth/login";
+import {
+  LoginActionPayload,
+  LoginResponse,
+  SignupAcionPayload,
+  SignupResponse,
+} from "../../models/auth/login";
 import { ErrorType } from "../../models/error";
 import { DEFAULT_ERROR_MSG } from "../../utils/constants";
 import { toast } from "react-toastify";
@@ -41,6 +46,22 @@ export const loginUser = createAsyncThunk<
   }
 });
 
+export const createUser = createAsyncThunk<
+  SignupResponse,
+  SignupAcionPayload,
+  { rejectValue: ErrorType }
+>("authSlice/signupUser", async (payload, { rejectWithValue }) => {
+  try {
+    const res = await AuthApi.signup(payload.userName, payload.name);
+    console.log(res);
+    return res as SignupResponse;
+  } catch (e) {
+    const typedErr = e as ErrorType;
+    toast.error(typedErr?.message);
+    return rejectWithValue(typedErr);
+  }
+});
+
 export const AuthSlice = createSlice({
   name: "authSlice",
   reducers: {},
@@ -55,6 +76,17 @@ export const AuthSlice = createSlice({
       state.loginLoading = false;
     });
     builder.addCase(loginUser.pending, (state) => {
+      state.loginLoading = true;
+    });
+    builder.addCase(createUser.rejected, (state, action) => {
+      state.signupLoading = false;
+    });
+    builder.addCase(createUser.fulfilled, (state, action) => {
+      state.loggedInUserName = action.payload.athlete_name;
+      state.loggedInUserUserName = action.payload.athlete_id;
+      state.signupLoading = false;
+    });
+    builder.addCase(createUser.pending, (state) => {
       state.signupLoading = true;
     });
   },
