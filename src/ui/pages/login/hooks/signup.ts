@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/redux";
 import { createUser } from "../../../../store/slices/authSlice";
+import { useNavigate } from "react-router-dom";
 
 export const useSignupHook = () => {
+  const dispatch = useAppDispatch();
+  const navigation = useNavigate();
+
   const [name, setName] = useState("");
   const [userName, setUserName] = useState("");
-  const dispatch = useAppDispatch();
+
   const { signupLoading } = useAppSelector((store) => store.auth);
 
   const handleUserNameChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,8 +20,15 @@ export const useSignupHook = () => {
     setName(ev.target.value);
   };
 
-  const handleSignup = () => {
-    dispatch(createUser({ name: name, userName: userName }));
+  const handleSignup = async () => {
+    try {
+      await dispatch(createUser({ name: name, userName: userName })).unwrap();
+      onSignup();
+    } catch (e) {}
+  };
+
+  const onSignup = () => {
+    navigation("/events");
   };
 
   return {

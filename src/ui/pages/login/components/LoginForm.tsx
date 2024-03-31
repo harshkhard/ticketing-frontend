@@ -51,7 +51,7 @@ export const LoginForm = (props: LoginFormProps) => {
             color="secondary"
             onClick={props.onFormStateChnage}
           >
-            Sign up
+            Create an account
           </Button>
         </Grid>
       </Grid>

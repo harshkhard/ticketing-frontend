@@ -1,10 +1,17 @@
 import { Slide } from "@mui/material";
 import { Page } from "../../components/Page";
 import { LoginBox, LoginContainer } from "./styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoginForm } from "./components/LoginForm";
 import { FormState } from "./constants";
 import { SignupForm } from "./components/SignupForm";
+import { AnimatePresence } from "framer-motion";
+import {
+  ANIMATION_DURATION,
+  SlideLeftFrom100,
+  SlideLeftFromZero,
+  SlideRightFromZero,
+} from "./framer";
 
 export const Login = () => {
   const [formState, setFormState] = useState(FormState.LOGIN);
@@ -20,26 +27,30 @@ export const Login = () => {
   return (
     <Page>
       <LoginContainer>
-        <Slide
-          in={formState === FormState.LOGIN}
-          mountOnEnter
-          unmountOnExit
-          direction={"right"}
-        >
-          <LoginBox>
-            <LoginForm onFormStateChnage={handleFormStateChange} />
-          </LoginBox>
-        </Slide>
-        <Slide
-          in={formState === FormState.SIGNUP}
-          mountOnEnter
-          unmountOnExit
-          direction={"left"}
-        >
-          <LoginBox>
-            <SignupForm onFormStateChnage={handleFormStateChange} />
-          </LoginBox>
-        </Slide>
+        <AnimatePresence mode="wait">
+          {formState === FormState.LOGIN && (
+            <LoginBox
+              key={"login"}
+              initial={{ x: "-100%", opacity: 0 }}
+              transition={{ duration: ANIMATION_DURATION }}
+              animate={SlideLeftFrom100}
+              exit={SlideLeftFromZero}
+            >
+              <LoginForm onFormStateChnage={handleFormStateChange} />
+            </LoginBox>
+          )}
+          {formState === FormState.SIGNUP && (
+            <LoginBox
+              key={"signup"}
+              initial={{ x: "100%", opacity: 0 }}
+              animate={SlideLeftFrom100}
+              exit={SlideRightFromZero}
+              transition={{ duration: ANIMATION_DURATION }}
+            >
+              <SignupForm onFormStateChnage={handleFormStateChange} />
+            </LoginBox>
+          )}
+        </AnimatePresence>
       </LoginContainer>
     </Page>
   );

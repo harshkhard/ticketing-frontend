@@ -1,6 +1,7 @@
 export type LoginResponse = {
   athlete_name: string;
   athlete_id: string;
+  id: number;
 };
 
 export type LoginActionPayload = {
@@ -10,6 +11,7 @@ export type LoginActionPayload = {
 export type SignupResponse = {
   athlete_name: string;
   athlete_id: string;
+  id: number;
 };
 
 export type SignupAcionPayload = {

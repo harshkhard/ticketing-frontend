@@ -16,6 +16,7 @@ type initialStateType = {
    */
   loggedInUserUserName: string;
   loggedInUserName: string;
+  loggedInUserId: number | null;
   loginLoading: boolean;
 
   /**
@@ -27,6 +28,7 @@ type initialStateType = {
 const initialState: initialStateType = {
   loggedInUserUserName: "",
   loggedInUserName: "",
+  loggedInUserId: null,
   loginLoading: false,
   signupLoading: false,
 };
@@ -73,6 +75,7 @@ export const AuthSlice = createSlice({
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state.loggedInUserName = action.payload.athlete_name;
       state.loggedInUserUserName = action.payload.athlete_id;
+      state.loggedInUserId = action.payload.id;
       state.loginLoading = false;
     });
     builder.addCase(loginUser.pending, (state) => {
@@ -84,6 +87,7 @@ export const AuthSlice = createSlice({
     builder.addCase(createUser.fulfilled, (state, action) => {
       state.loggedInUserName = action.payload.athlete_name;
       state.loggedInUserUserName = action.payload.athlete_id;
+      state.loggedInUserId = action.payload.id;
       state.signupLoading = false;
     });
     builder.addCase(createUser.pending, (state) => {

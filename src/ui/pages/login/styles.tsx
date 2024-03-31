@@ -1,4 +1,5 @@
 import { Box, Divider, Grid, styled } from "@mui/material";
+import { motion } from "framer-motion";
 
 export const LoginContainer = styled(Box)(() => {
   return {
@@ -11,12 +12,12 @@ export const LoginContainer = styled(Box)(() => {
   };
 });
 
-export const LoginBox = styled(Box)(({ theme }) => {
+export const LoginBox = styled(motion.div)(({ theme }) => {
   return {
     padding: theme.spacing(3),
     boxShadow: theme.shadows[5],
     borderRadius: theme.spacing(1),
-    width: "30%",
+    minWidth: "30%",
   };
 });
 
