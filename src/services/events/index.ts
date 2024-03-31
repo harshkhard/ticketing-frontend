@@ -8,7 +8,7 @@ export const UserEventApi = {
     return BaseApi({
       url: userEventsApiPath + "/registered_events",
       params: { athlete_id: userId },
-      method: "POST",
+      method: "GET",
     });
   },
   getAllUnregisteredEvents: (userId: number) => {
@@ -20,14 +20,14 @@ export const UserEventApi = {
   },
   registerEvent: (userId: number, eventId: number) => {
     return BaseApi({
-      url: userEventsApiPath + "/un_registered_events",
+      url: userEventsApiPath + "/register_event",
       data: { athlete_id: userId, event_id: eventId },
       method: "POST",
     });
   },
   unRegisterEvent: (userId: number, eventId: number) => {
     return BaseApi({
-      url: userEventsApiPath + "/un_registered_events",
+      url: userEventsApiPath + "/un_register_event",
       data: { athlete_id: userId, event_id: eventId },
       method: "PATCH",
     });
