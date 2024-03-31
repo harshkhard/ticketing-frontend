@@ -3,6 +3,7 @@ import { AuthApi } from "../../services/auth";
 import { LoginActionPayload, LoginResponse } from "../../models/auth/login";
 import { ErrorType } from "../../models/error";
 import { DEFAULT_ERROR_MSG } from "../../utils/constants";
+import { toast } from "react-toastify";
 
 type initialStateType = {
   /**
@@ -34,7 +35,9 @@ export const loginUser = createAsyncThunk<
     const res = await AuthApi.login(payload.userName);
     return res as LoginResponse;
   } catch (e) {
-    return rejectWithValue(e as ErrorType);
+    const typedErr = e as ErrorType;
+    toast.error(typedErr?.message);
+    return rejectWithValue(typedErr);
   }
 });
 
@@ -45,7 +48,6 @@ export const AuthSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(loginUser.rejected, (state, action) => {
       state.loginLoading = false;
-      alert(action.payload?.message ?? DEFAULT_ERROR_MSG);
     });
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state.loggedInUserName = action.payload.athlete_name;
