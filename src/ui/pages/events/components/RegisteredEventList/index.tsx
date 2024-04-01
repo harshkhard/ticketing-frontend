@@ -67,7 +67,7 @@ export const RegisteredEventList = () => {
         })
       );
     }
-  }, []);
+  }, [userRegisteredEvents.length]);
 
   return (
     <EventListContainer

@@ -72,7 +72,7 @@ export const UnRegisteredEventList = () => {
         })
       );
     }
-  }, []);
+  }, [userUnregisteredEvents.length]);
 
   return (
     <EventListContainer

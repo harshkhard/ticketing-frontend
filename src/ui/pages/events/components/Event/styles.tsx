@@ -1,4 +1,4 @@
-import { Typography, styled } from "@mui/material";
+import { Typography, colors, styled } from "@mui/material";
 import { motion } from "framer-motion";
 import React from "react";
 
@@ -9,7 +9,7 @@ export const ListBox = styled(motion.div)<{ isDragging: boolean }>(
       borderWidth: 1,
       borderRadius: theme.spacing(0.5),
       borderStyle: "solid",
-      borderColor: "GrayText",
+      borderColor: colors.grey[400],
       cursor: "pointer",
       backgroundColor: theme.palette.common.white,
       position: "relative",
