@@ -88,6 +88,7 @@ export const RegisteredEventList = () => {
         handleDragEnd={handleDragEnd}
         ref={listRef}
         onButtonClick={handleButtonClick}
+        listType={ListType.REGISTERED}
       />
     </EventListContainer>
   );

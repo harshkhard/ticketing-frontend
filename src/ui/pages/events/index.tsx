@@ -15,10 +15,10 @@ export const Events = () => {
     <Page>
       <ListsContainer container spacing={SPACING}>
         <Grid item xs>
-          <RegisteredEventList />
+          <UnRegisteredEventList />
         </Grid>
         <Grid item xs>
-          <UnRegisteredEventList />
+          <RegisteredEventList />
         </Grid>
       </ListsContainer>
     </Page>

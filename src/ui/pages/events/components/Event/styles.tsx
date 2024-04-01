@@ -1,4 +1,4 @@
-import { styled } from "@mui/material";
+import { Typography, styled } from "@mui/material";
 import { motion } from "framer-motion";
 import React from "react";
 
@@ -8,7 +8,8 @@ export const ListBox = styled(motion.div)<{ isDragging: boolean }>(
       padding: theme.spacing(1),
       borderWidth: 1,
       borderRadius: theme.spacing(0.5),
-      boxShadow: theme.shadows[1],
+      borderStyle: "solid",
+      borderColor: "GrayText",
       cursor: "pointer",
       backgroundColor: theme.palette.common.white,
       position: "relative",
@@ -26,3 +27,10 @@ export const ListBox = styled(motion.div)<{ isDragging: boolean }>(
     };
   }
 );
+
+export const TitleFont = styled(Typography)(({ theme }) => {
+  return {
+    fontSize: theme.typography.pxToRem(18),
+    fontWeight: "bolder",
+  };
+});

@@ -5,7 +5,7 @@ import { UserEvent } from "../../../../models/userEvents/userEventsResponse";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 
-export const ANIMATION_DELAY_EVENT_LIST = 0.2;
+export const ANIMATION_DELAY_EVENT_LIST = 0.1;
 export const ANIMATION_DURATION_EVENT = 0.2;
 
 export const EVENT_LIST_ANIMATION_DURATION = "0.3s";
@@ -16,6 +16,8 @@ export enum ListType {
 }
 
 const MAX_ALLOWED_EVENTS = 3;
+
+const DATE_FORMAT = "hh:mm A";
 
 export enum RegsiteredEventErrorType {
   MAX_EVENTS,
@@ -37,8 +39,10 @@ export const checkForConflictingEvents = (selectedEvent: UserEvent) => {
      * Check for start time between intervals
      */
     if (
-      dayjs(event.start_time).isBefore(eventStartTime) &&
-      dayjs(event.end_time).isAfter(eventStartTime)
+      (dayjs(event.start_time).isBefore(eventStartTime) ||
+        dayjs(event.start_time).isSame(eventStartTime)) &&
+      (dayjs(event.end_time).isAfter(eventStartTime) ||
+        dayjs(event.end_time).isSame(eventStartTime))
     ) {
       return false;
     }
@@ -46,8 +50,10 @@ export const checkForConflictingEvents = (selectedEvent: UserEvent) => {
      * Check for end time between intervals
      */
     if (
-      dayjs(event.start_time).isBefore(eventEndTime) &&
-      dayjs(event.end_time).isAfter(eventEndTime)
+      (dayjs(event.start_time).isBefore(eventEndTime) ||
+        dayjs(event.start_time).isSame(eventEndTime)) &&
+      (dayjs(event.end_time).isAfter(eventEndTime) ||
+        dayjs(event.end_time).isSame(eventEndTime))
     ) {
       return false;
     }
@@ -90,4 +96,10 @@ export const checkIfPointExistInsideBounds = (point: Point, bounds: Bounds) => {
     point.y > bounds.startY &&
     point.y < bounds.endY
   );
+};
+
+export const getEventStartAndEndTime = (startTime: Date, endTime: Date) => {
+  return `${dayjs(startTime).format(DATE_FORMAT)} - ${dayjs(endTime).format(
+    DATE_FORMAT
+  )}`;
 };

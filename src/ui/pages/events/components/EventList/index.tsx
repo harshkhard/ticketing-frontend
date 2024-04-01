@@ -12,6 +12,7 @@ type EventListProps = {
   handleDrag: (point: Point, index: number) => void;
   handleDragEnd: (info: Point, index: number) => void;
   onButtonClick: (index: number) => void;
+  listType: ListType;
 };
 
 export const EventList = React.forwardRef<EventItemHandler, EventListProps>(
@@ -62,6 +63,7 @@ export const EventList = React.forwardRef<EventItemHandler, EventListProps>(
                     onButtonClick={() => {
                       props.onButtonClick(index);
                     }}
+                    eventType={props.listType}
                   />
                 </Grid>
               );

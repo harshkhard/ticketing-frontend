@@ -90,6 +90,7 @@ export const UnRegisteredEventList = () => {
         handleDragEnd={handleDragEnd}
         ref={listRef}
         onButtonClick={handleButtonClick}
+        listType={ListType.UNREGISTERED}
       />
     </EventListContainer>
   );
