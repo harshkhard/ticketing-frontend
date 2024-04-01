@@ -8,7 +8,7 @@ import {
 import { FORM_SPACING } from "../constants";
 import { LoginBox, LoginTitleDivider } from "../styles";
 import { useSignupHook } from "../hooks/signup";
-import { BUTTON_LOADER_SIZE } from "../../../../utils/constants";
+import { DEFAULT_LOADER_SÍZE } from "../../../../utils/constants";
 
 type SignupFormProps = {
   onFormStateChnage: () => void;
@@ -56,7 +56,7 @@ export const SignupForm = (props: SignupFormProps) => {
         <Grid item>
           <Button variant="outlined" onClick={handleSignup}>
             {signupLoading ? (
-              <CircularProgress size={BUTTON_LOADER_SIZE} />
+              <CircularProgress size={DEFAULT_LOADER_SÍZE} />
             ) : (
               "Sign up"
             )}

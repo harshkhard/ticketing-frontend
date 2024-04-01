@@ -12,3 +12,11 @@ export interface UserEvent {
   start_time: Date;
   end_time: Date;
 }
+
+export type RegisterEventForUserActionPayload = {
+  eventIndex: number;
+};
+
+export type UnRegisterEventForUserActionPayload = {
+  eventIndex: number;
+};

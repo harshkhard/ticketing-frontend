@@ -9,7 +9,7 @@ import React from "react";
 import { LoginBox, LoginTitleDivider } from "../styles";
 import { FORM_SPACING } from "../constants";
 import { useLoginHook } from "../hooks/login";
-import { BUTTON_LOADER_SIZE } from "../../../../utils/constants";
+import { DEFAULT_LOADER_SÍZE } from "../../../../utils/constants";
 
 type LoginFormProps = {
   onFormStateChnage: () => void;
@@ -39,7 +39,7 @@ export const LoginForm = (props: LoginFormProps) => {
         <Grid item>
           <Button variant="outlined" onClick={handleLogin}>
             {loginLoading ? (
-              <CircularProgress size={BUTTON_LOADER_SIZE} />
+              <CircularProgress size={DEFAULT_LOADER_SÍZE} />
             ) : (
               "Login"
             )}

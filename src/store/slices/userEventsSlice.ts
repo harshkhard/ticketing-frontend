@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   GetUserEventsActionPayload,
+  RegisterEventForUserActionPayload,
+  UnRegisterEventForUserActionPayload,
   UserEvent,
   UserEventsResponse,
 } from "../../models/userEvents/userEventsResponse";
@@ -78,6 +80,52 @@ export const getUserUnRegisteredEvents = createAsyncThunk<
   }
 );
 
+export const registerUserForEvent = createAsyncThunk<
+  undefined,
+  RegisterEventForUserActionPayload,
+  { rejectValue: ErrorType }
+>(
+  "userEventsSlice/registerEventForUser",
+  async (payload, { rejectWithValue, getState, dispatch }) => {
+    try {
+      const state = getState() as RootState;
+      await UserEventApi.registerEvent(
+        state.auth.loggedInUserId!,
+        state.event.userUnregisteredEvents[payload.eventIndex]?.id
+      );
+      dispatch(getUserRegisteredEvents({}));
+      dispatch(getUserUnRegisteredEvents({}));
+    } catch (e) {
+      const typedRes = e as ErrorType;
+      toast.error(typedRes?.message ?? DEFAULT_ERROR_MSG);
+      return rejectWithValue(typedRes);
+    }
+  }
+);
+
+export const unRegisterEventForUser = createAsyncThunk<
+  undefined,
+  UnRegisterEventForUserActionPayload,
+  { rejectValue: ErrorType }
+>(
+  "userEventsSlice/unRegisterEventForUser",
+  async (payload, { rejectWithValue, getState, dispatch }) => {
+    try {
+      const state = getState() as RootState;
+      await UserEventApi.unRegisterEvent(
+        state.auth.loggedInUserId!,
+        state.event.userRegisteredEvents[payload.eventIndex]?.id
+      );
+      dispatch(getUserRegisteredEvents({}));
+      dispatch(getUserUnRegisteredEvents({}));
+    } catch (e) {
+      const typedRes = e as ErrorType;
+      toast.error(typedRes?.message ?? DEFAULT_ERROR_MSG);
+      return rejectWithValue(typedRes);
+    }
+  }
+);
+
 export const UserEventSlice = createSlice({
   name: "userEventsSlice",
   reducers: {
@@ -116,6 +164,27 @@ export const UserEventSlice = createSlice({
     });
     builder.addCase(getUserUnRegisteredEvents.rejected, (state, action) => {
       state.userUnregisteredEventsLoading = false;
+    });
+
+    builder.addCase(registerUserForEvent.pending, (state, action) => {
+      state.userUnregisteredEventsLoading = true;
+      state.userRegisteredEventsLoading = true;
+    });
+
+    builder.addCase(registerUserForEvent.fulfilled, (state, action) => {});
+    builder.addCase(registerUserForEvent.rejected, (state, action) => {
+      state.userUnregisteredEventsLoading = false;
+      state.userRegisteredEventsLoading = false;
+    });
+
+    builder.addCase(unRegisterEventForUser.pending, (state, action) => {
+      state.userUnregisteredEventsLoading = true;
+      state.userRegisteredEventsLoading = true;
+    });
+    builder.addCase(unRegisterEventForUser.fulfilled, (state, action) => {});
+    builder.addCase(unRegisterEventForUser.rejected, (state, action) => {
+      state.userUnregisteredEventsLoading = false;
+      state.userRegisteredEventsLoading = false;
     });
   },
 });

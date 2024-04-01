@@ -1,4 +1,4 @@
-import { styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { motion } from "framer-motion";
 
 export const ListContainer = styled(motion.div)(({ theme }) => {
@@ -6,9 +6,7 @@ export const ListContainer = styled(motion.div)(({ theme }) => {
     display: "flex",
     gap: theme.spacing(2),
     flexDirection: "column",
-    boxShadow: theme.shadows[5],
     padding: theme.spacing(2),
-    borderRadius: theme.spacing(1),
     height: "100%",
   };
 });
@@ -20,5 +18,14 @@ export const EmptyListContainer = styled("div")(({ theme }) => {
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
+  };
+});
+
+export const ListFlexContainer = styled(Box)(({ theme }) => {
+  return {
+    display: "flex",
+    gap: theme.spacing(2),
+    flexWrap: "wrap",
+    flexDirection: "row",
   };
 });
