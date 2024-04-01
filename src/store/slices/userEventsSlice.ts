@@ -10,11 +10,25 @@ import { DEFAULT_ERROR_MSG } from "../../utils/constants";
 import { UserEventApi } from "../../services/events";
 import { RootState } from "..";
 
+export type Bounds = {
+  startX: number;
+  endX: number;
+  startY: number;
+  endY: number;
+};
+
 type initialStateType = {
   userRegisteredEventsLoading: boolean;
   userRegisteredEvents: UserEvent[];
   userUnregisteredEventsLoading: boolean;
   userUnregisteredEvents: UserEvent[];
+  /**
+   * ui bonuds
+   */
+  registeredEventsBounds: Bounds | null;
+  registeredListActive: boolean;
+  unRegisteredEventsBounds: Bounds | null;
+  unRegisteredListActive: boolean;
 };
 
 const initialState: initialStateType = {
@@ -22,6 +36,10 @@ const initialState: initialStateType = {
   userRegisteredEvents: [],
   userUnregisteredEventsLoading: false,
   userUnregisteredEvents: [],
+  registeredEventsBounds: null,
+  registeredListActive: false,
+  unRegisteredEventsBounds: null,
+  unRegisteredListActive: false,
 };
 
 export const getUserRegisteredEvents = createAsyncThunk<
@@ -62,7 +80,20 @@ export const getUserUnRegisteredEvents = createAsyncThunk<
 
 export const UserEventSlice = createSlice({
   name: "userEventsSlice",
-  reducers: {},
+  reducers: {
+    setReigsteredEventsBounds(state, action: { payload: Bounds }) {
+      state.registeredEventsBounds = action.payload;
+    },
+    setUnRegisteredEventBounds(state, action: { payload: Bounds }) {
+      state.unRegisteredEventsBounds = action.payload;
+    },
+    setRegisteredListActiveState(state, action: { payload: boolean }) {
+      state.registeredListActive = action.payload;
+    },
+    setUnRegisteteredListActiveState(state, action: { payload: boolean }) {
+      state.unRegisteredListActive = action.payload;
+    },
+  },
   initialState: initialState,
   extraReducers: (builder) => {
     builder.addCase(getUserRegisteredEvents.pending, (state, action) => {
@@ -88,3 +119,10 @@ export const UserEventSlice = createSlice({
     });
   },
 });
+
+export const {
+  setReigsteredEventsBounds,
+  setUnRegisteredEventBounds,
+  setUnRegisteteredListActiveState,
+  setRegisteredListActiveState,
+} = UserEventSlice.actions;
