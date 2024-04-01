@@ -32,13 +32,13 @@ export const UnRegisteredEventList = () => {
   const listRef = useRef<EventItemHandler>(null);
 
   const registerEvent = (index: number) => {
-    if (checkForRegisteredEvent(userUnregisteredEvents[index])) {
-      dispatch(registerUserForEvent({ eventIndex: index }));
-    }
+    dispatch(registerUserForEvent({ eventIndex: index }));
   };
 
   const handleButtonClick = (index: number) => {
-    registerEvent(index);
+    if (checkForRegisteredEvent(userUnregisteredEvents[index])) {
+      registerEvent(index);
+    }
   };
 
   const handleDrag = (point: Point, index: number) => {
@@ -47,7 +47,10 @@ export const UnRegisteredEventList = () => {
 
   const handleDragEnd = (point: Point, index: number) => {
     dispatch(setRegisteredListActiveState(false));
-    if (checkIfPointExistInsideRegisteredBounds(point)) {
+    if (
+      checkIfPointExistInsideRegisteredBounds(point) &&
+      checkForRegisteredEvent(userUnregisteredEvents[index])
+    ) {
       registerEvent(index);
     } else {
       listRef?.current?.snapToOrigin(index);

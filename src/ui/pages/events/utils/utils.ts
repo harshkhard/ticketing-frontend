@@ -26,7 +26,7 @@ export enum RegsiteredEventErrorType {
 
 export const checkForMaxEvents = () => {
   return (
-    store.getState().event.userRegisteredEvents.length <= MAX_ALLOWED_EVENTS
+    store.getState().event.userRegisteredEvents.length < MAX_ALLOWED_EVENTS
   );
 };
 

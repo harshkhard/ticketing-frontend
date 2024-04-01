@@ -55,7 +55,6 @@ export const createUser = createAsyncThunk<
 >("authSlice/signupUser", async (payload, { rejectWithValue }) => {
   try {
     const res = await AuthApi.signup(payload.userName, payload.name);
-    console.log(res);
     return res as SignupResponse;
   } catch (e) {
     const typedErr = e as ErrorType;
